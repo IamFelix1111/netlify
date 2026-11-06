@@ -1,0 +1,82 @@
+form {
+    display: table;
+    .row {
+        display: table-row;
+        label {
+            display: table-cell;
+            font-size: 16px;
+            padding-right: 10px;
+        }
+        input {
+            width: stretch;
+        }
+        .key-field {
+            display: table-cell;
+            position: relative;
+            vertical-align: middle;
+            font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
+            font-size: 14px;
+            line-height: 16px;
+            input {
+                width: 40ch;
+                border: black solid 1px;
+                padding: 2px;
+                font: inherit;
+                line-height: inherit;
+                background: #fff;
+                &::placeholder {
+                    color: #767676;
+                }
+                &::selection {
+                    background: #b6d7ff;
+                }
+            }
+            &.masking input {
+                color: transparent;
+                caret-color: #000;
+            }
+            .key-mask {
+                position: absolute;
+                left: 3px;
+                top: 3px;
+                right: 3px;
+                bottom: 3px;
+                white-space: pre;
+                overflow: hidden;
+                pointer-events: none;
+                color: #000;
+            }
+        }
+    }
+}
+#bar:not([hidden]) {
+    display: block;
+    width: 100%;
+    max-width: 360px;
+    height: 12px;
+    margin: 6px 0;
+    appearance: none;
+    border: black solid 1px;
+    border-radius: 8px;
+    overflow: hidden;
+    background: #ddd;
+    &::-webkit-progress-bar {
+        background: #ddd;
+    }
+    &::-webkit-progress-value {
+        background: #07f;
+        border-radius: 8px 0 0 8px;
+    }
+    &::-moz-progress-bar {
+        background: #07f;
+        border-radius: 8px 0 0 8px;
+    }
+}
+#status {
+    &.ok {
+        color: green;
+    }
+    &.err {
+        color: crimson;
+    }
+}
