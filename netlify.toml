@@ -1,0 +1,10 @@
+[[headers]]
+  for = "/assets/*"
+  [headers.values]
+    Access-Control-Allow-Origin = "*"
+
+[[redirects]]
+  from = "/*"
+  to = "https://iamfelix1111.github.io/:splat"
+  status = 404!
+  force = false
