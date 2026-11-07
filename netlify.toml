@@ -6,5 +6,5 @@
 [[redirects]]
   from = "/*"
   to = "https://iamfelix1111.github.io/:splat"
-  status = 404!
+  status = 404
   force = false
