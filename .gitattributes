@@ -1,1 +1,13 @@
-text eol=lf
+# Normalize every text file to LF in the repository and in the working tree,
+# so Windows checkouts no longer produce CRLF/LF churn and warnings.
+* text=auto eol=lf
+
+# Binary assets: never apply text/EOL conversion.
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
+*.ico binary
+*.webp binary
+*.woff binary
+*.woff2 binary

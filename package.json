@@ -1,0 +1,21 @@
+{
+  "name": "netlify",
+  "version": "1.0.0",
+  "description": "Netlify Site",
+  "devDependencies": {
+    "serve": "^14.2.7"
+  },
+  "scripts": {
+    "start": "serve src -l 8000 --ssl-cert cert.pem --ssl-key key.pem"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/IamFelix1111/netlify.git"
+  },
+  "author": "IamFelix",
+  "license": "LGPL-3.0-or-later",
+  "bugs": {
+    "url": "https://github.com/IamFelix1111/netlify/issues/new"
+  },
+  "homepage": "https://iamfelix.netlify.app"
+}
