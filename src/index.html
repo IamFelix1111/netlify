@@ -19,9 +19,24 @@
     <main>
         <a href="/ExtendedHotbar"><img src="/ExtendedHotbar/icon.png" alt="">ExtendedHotbar</a>
         <a href="/Recording"><img src="/Recording/icon.svg" alt="">Recording</a>
+        <a href="/Secrets" id="secret-entry" hidden><img src="/Secrets/icon.svg" alt="">Secrets</a>
     </main>
     <footer>
         <span>&copy; 2026 <a href="https://github.com/IamFelix1111">IamFelix</a>.</span>
     </footer>
+<script>
+(function () {
+    var entry = document.getElementById('secret-entry');
+    function show() { entry.hidden = false; }
+    if (location.hash === '#Secrets') show();
+    var clicks = 0, last = 0;
+    document.querySelector('header .title img').addEventListener('click', function () {
+        var now = Date.now();
+        clicks = now - last < 800 ? clicks + 1 : 1;
+        last = now;
+        if (clicks >= 5) { show(); clicks = 0; }
+    });
+})();
+</script>
 </body>
 </html>

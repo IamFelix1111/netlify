@@ -1,3 +1,7 @@
+main a[hidden] {
+    display: none;
+}
+
 main a {
     display: block;
     text-decoration: none;
