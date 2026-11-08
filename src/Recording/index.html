@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <base href="/Recording/">
+    <link rel="stylesheet" href="/style.css">
+    <link rel="icon" type="image/svg+xml" href="icon.svg">
+    <title>Recording</title>
+    <script src="/i18n.js"></script>
+    <script src="i18n.js"></script>
+    <script src="/components.js"></script>
+</head>
+<body>
+<header>
+    <a href="/" class="back" data-i18n="back">&leftarrow; Home</a>
+    <div class="title">
+        <img src="icon.svg" alt="">
+        Recording
+    </div>
+    <lang-select></lang-select>
+</header>
+<main>
+    <h1>Recording</h1>
+    <p data-i18n="intro">A zero-dependency native Win32 screen recorder for Windows: DXGI Desktop Duplication capture with automatic GDI fallback, Media Foundation H.264 encoding to MP4 — a single static-linked exe with no installer and no extra DLLs.</p>
+    <p data-i18n="version-stable">No stable release yet.</p>
+    <p data-i18n="version-prerelease">Latest pre-release: <strong>v0.3.0-test</strong>.</p>
+
+    <section>
+        <h2 data-i18n="features">Features</h2>
+        <ul>
+            <li data-i18n="feat-capture"><strong>Capture:</strong> DXGI Desktop Duplication (GPU path) with automatic GDI fallback; record a single monitor or, on the GDI backend, the whole virtual desktop.</li>
+            <li data-i18n="feat-encoding"><strong>Encoding:</strong> Media Foundation H.264 → MP4, with hardware encoding used automatically when available.</li>
+            <li data-i18n="feat-cursor"><strong>Mouse pointer:</strong> composited into the video (per-pixel alpha blending on the DXGI path) and can be disabled.</li>
+            <li data-i18n="feat-border"><strong>Recording border:</strong> a red frame marks the capture area (yellow while paused) — always on top, click-through, and never captured into the video.</li>
+            <li data-i18n="feat-tray"><strong>System tray:</strong> click to pause/resume, double-click to show the window, middle-click to stop; while recording, closing the window just hides it to the tray.</li>
+            <li data-i18n="feat-stats"><strong>Live stats:</strong> state, duration, fps and file size update in real time, mirrored in the title bar with a status-colored icon.</li>
+            <li data-i18n="feat-paths"><strong>Path templates:</strong> output paths support known-folder tokens (<code>CAPTURES</code>, <code>VIDEOS</code>, …) and date-time tokens (<code>YYYY</code>/<code>MM</code>/<code>DD</code>/<code>HH</code>/<code>MM</code>/<code>SS</code>).</li>
+            <li data-i18n="feat-settings"><strong>Settings memory:</strong> every option is saved instantly and restored on restart; missing output folders are created automatically.</li>
+            <li data-i18n="feat-language"><strong>UI language:</strong> Chinese and English built in — the interface follows your Windows display language automatically.</li>
+        </ul>
+    </section>
+
+    <section>
+        <h2 data-i18n="usage">Usage</h2>
+        <ul>
+            <li data-i18n="usage-setup">Pick the monitor, frame rate (10–60), bitrate (auto or 4–40 Mbps), output path, cursor visibility and capture backend.</li>
+            <li data-i18n="usage-run">Press <strong>Start</strong> (the default button — Enter works). Pause/Resume at any time; the same button becomes <strong>Stop</strong> and reports a successful save.</li>
+            <li data-i18n="usage-output">By default, recordings go to the Captures folder as <code>Capture-YYYYMMDD-HHMMSS.mp4</code>.</li>
+            <li data-i18n="usage-tray">While recording, you can minimize or close the main window — keep controlling everything from the tray icon.</li>
+        </ul>
+    </section>
+
+    <section>
+        <h2 data-i18n="requirements">Requirements</h2>
+        <ul>
+            <li data-i18n="req-os">Windows 10 2004 or newer (recommended — excluding the border from capture needs 2004).</li>
+            <li data-i18n="req-gpu">A graphics device with DirectX 11 support.</li>
+            <li data-i18n="req-runtime">Nothing else: everything is statically linked into the single <code>RecordingGui.exe</code>.</li>
+        </ul>
+    </section>
+
+    <section>
+        <h2 data-i18n="links">Links</h2>
+        <p>
+            <a href="https://github.com/IamFelix1111/Recording/releases">
+                <span data-i18n="downloads">Downloads</span>
+            </a>
+        </p>
+        <p>
+            <a href="https://github.com/IamFelix1111/Recording.git">
+                <span data-i18n="source-code">Source code</span>
+            </a>
+        </p>
+        <p>
+            <a href="https://github.com/IamFelix1111/Recording/issues/new">
+                <span data-i18n="issues">Issues</span>
+            </a>
+        </p>
+    </section>
+</main>
+<footer>
+    <span>&copy; 2026 <a href="https://github.com/IamFelix1111">IamFelix</a>.</span>
+</footer>
+</body>
+</html>

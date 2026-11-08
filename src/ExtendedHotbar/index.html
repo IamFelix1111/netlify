@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <base href="/ExtendedHotbar/">
+    <link rel="stylesheet" href="/style.css">
+    <link rel="icon" type="image/png" href="icon.png">
+    <title>ExtendedHotbar</title>
+    <script src="/i18n.js"></script>
+    <script src="i18n.js"></script>
+    <script src="/components.js"></script>
+</head>
+<body>
+    <header>
+        <a href="/" class="back" data-i18n="back">&leftarrow; Home</a>
+        <div class="title">
+            <img src="icon.png" alt="">
+            ExtendedHotbar
+        </div>
+        <lang-select></lang-select>
+    </header>
+    <main>
+        <h1>ExtendedHotbar</h1>
+        <p data-i18n="intro">Place the bottom row of your inventory above the hotbar, doubling your quick-access slots.</p>
+        <p data-i18n="version">Latest version: <strong>1.0.2</strong> for Minecraft <strong>1.21.11</strong>.</p>
+
+        <section>
+            <h2 data-i18n="keybindings">Keybindings</h2>
+            <ul>
+                <li><code>R</code> <span data-i18n="key-r">— Swap the hotbar with the row above it.</span></li>
+                <li><code>Shift+R</code> <span data-i18n="key-shift-r">— Swap only the items in your hand.</span></li>
+                <li><code>slot key</code> <span data-i18n="key-slot">— Press the currently selected hotbar slot's key again to swap just that slot.</span></li>
+                <li><code>=</code> <span data-i18n="key-eq">— Enable or disable the mod.</span></li>
+                <li><code>V</code> <span data-i18n="key-v">— Toggle fluent mode.</span></li>
+            </ul>
+            <p data-i18n="keybinds-note">All keybinds are configurable in Minecraft's "Controls" settings, under the "Extended Hotbar" category. Key actions are edge-triggered, so holding a key down won't repeat the action.</p>
+        </section>
+
+        <section>
+            <h2 data-i18n="fluent-mode">Fluent Mode</h2>
+            <p data-i18n="fluent-desc">Fluent mode swaps transparently as you scroll along a double-wide hotbar, rendering the second row next to the first instead of on top. Enable it from the configuration screen (requires <a href="https://www.curseforge.com/minecraft/mc-mods/modmenu">Mod Menu</a>) or by pressing <code>V</code>.</p>
+            <p data-i18n="fluent-detail">While the secondary hotbar is selected, opening your inventory or any container (chest, furnace, etc.) shows your items in their original rows, and clicking or shift-clicking acts on the item you see. This works in single-player and on servers, in both survival and creative mode, including the creative inventory's item-grid tabs.</p>
+        </section>
+
+        <section>
+            <h2 data-i18n="requirements">Requirements</h2>
+            <ul>
+                <li>Minecraft <strong>1.21.11</strong></li>
+                <li><a href="https://fabricmc.net/">Fabric Loader</a> 0.19.3+</li>
+                <li><a href="https://modrinth.com/mod/fabric-api">Fabric API</a></li>
+                <li>Java 21+</li>
+            </ul>
+            <p data-i18n="requirements-optional">Optional: <a href="https://www.curseforge.com/minecraft/mc-mods/modmenu">Mod Menu</a> adds the in-game configuration screen. <a href="https://modrinth.com/mod/cloth-config">Cloth Config</a> is bundled in the mod jar.</p>
+        </section>
+
+        <section>
+            <h2 data-i18n="links">Links</h2>
+            <p>
+                <a href="https://github.com/IamFelix1111/extendedhotbar.git">
+                    <span data-i18n="source-code">Source code</span>
+                </a>
+            </p>
+            <p>
+                <a href="https://github.com/IamFelix1111/extendedhotbar/issues/new">
+                    <span data-i18n="issues">Issues</span>
+                </a>
+            </p>
+        </section>
+    </main>
+    <footer>
+        <span>&copy; 2026 <a href="https://github.com/IamFelix1111">IamFelix</a>.</span>
+    </footer>
+</body>
+</html>

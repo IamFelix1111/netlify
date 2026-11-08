@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="0 0 512 512">
+  <!-- Screen recorder icon: monitor + record dot -->
+  <defs>
+    <linearGradient id="screen" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#3A4150"/>
+      <stop offset="1" stop-color="#232833"/>
+    </linearGradient>
+    <linearGradient id="bezel" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#59637A"/>
+      <stop offset="1" stop-color="#3C4354"/>
+    </linearGradient>
+    <radialGradient id="dot" cx="0.35" cy="0.3" r="1">
+      <stop offset="0" stop-color="#FF5A52"/>
+      <stop offset="0.55" stop-color="#DC1E1E"/>
+      <stop offset="1" stop-color="#A80F0F"/>
+    </radialGradient>
+  </defs>
+
+  <!-- stand -->
+  <rect x="216" y="392" width="80" height="52" rx="10" fill="#3C4354"/>
+  <rect x="136" y="436" width="240" height="28" rx="14" fill="#4A5266"/>
+
+  <!-- bezel -->
+  <rect x="40" y="64" width="432" height="336" rx="36" fill="url(#bezel)"/>
+
+  <!-- screen -->
+  <rect x="68" y="92" width="376" height="280" rx="20" fill="url(#screen)"/>
+
+  <!-- subtle screen sheen -->
+  <path d="M68 132 L444 92 L444 150 L68 196 Z" fill="#FFFFFF" opacity="0.06"/>
+
+  <!-- record dot with ring -->
+  <circle cx="256" cy="232" r="96" fill="none" stroke="#FFFFFF" stroke-opacity="0.14" stroke-width="14"/>
+  <circle cx="256" cy="232" r="72" fill="url(#dot)"/>
+  <ellipse cx="232" cy="204" rx="22" ry="14" fill="#FFFFFF" opacity="0.35" transform="rotate(-24 232 204)"/>
+</svg>

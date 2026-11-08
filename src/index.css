@@ -1,0 +1,22 @@
+main a {
+    display: block;
+    text-decoration: none;
+    width: fit-content;
+    background: #ddd;
+    color: #000;
+    border: 1px solid #000;
+    border-radius: 8px;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    &:not(:first-child){
+        margin-top: 10px;
+    }
+    &:hover {
+        background: #ccc;
+    }
+    img {
+        width: 16px;
+        height: 16px;
+    }
+}
