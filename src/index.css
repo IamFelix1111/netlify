@@ -1,5 +1,26 @@
-main a[hidden] {
+#secret-entry[hidden] {
     display: none;
+}
+
+#secret-entry {
+    position: fixed;
+    right: 15px;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    color: #fff;
+    text-decoration: none;
+    font-size: 15px;
+    font-weight: normal;
+    padding: 4px 6px;
+    border-radius: 6px;
+    &:hover {
+        background: #666;
+    }
+    img {
+        width: 16px;
+        height: 16px;
+    }
 }
 
 main a {

@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/style.css">
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+    <title>Report an issue</title>
+    <script src="/i18n.js"></script>
+    <script src="/components.js"></script>
+</head>
+<body>
+<header>
+    <a href="/" class="back" data-i18n="back">&leftarrow; Home</a>
+    <div class="title">
+        <img src="/favicon.svg" alt="">
+        <span data-i18n="issue-report">Report an issue</span>
+    </div>
+    <lang-select></lang-select>
+</header>
+<main>
+    <h1 data-i18n="issue-report">Report an issue</h1>
+    <p data-i18n="issue-note">No GitHub account needed — your report goes straight to the developer.</p>
+    <form name="issues" method="POST" netlify>
+        <p>
+            <label>
+                <span data-i18n="issue-project">Project</span>
+                <select name="project" id="issue-project">
+                    <option value="ExtendedHotbar">ExtendedHotbar</option>
+                    <option value="Recording">Recording</option>
+                </select>
+            </label>
+        </p>
+        <p>
+            <label>
+                <span data-i18n="issue-contact">Contact (optional)</span>
+                <input type="text" name="contact">
+            </label>
+        </p>
+        <p>
+            <label>
+                <span data-i18n="issue-message">Describe the issue</span>
+                <textarea name="message" rows="6" required></textarea>
+            </label>
+        </p>
+        <p>
+            <button type="submit" data-i18n="issue-submit">Submit</button>
+        </p>
+    </form>
+</main>
+<footer>
+    <span>&copy; 2026 <a href="https://github.com/IamFelix1111">IamFelix</a>.</span>
+</footer>
+<script>
+(function () {
+    var project = new URLSearchParams(location.search).get('project');
+    if (!project) return;
+    var select = document.getElementById('issue-project');
+    for (var i = 0; i < select.options.length; i++) {
+        if (select.options[i].value === project) {
+            select.value = project;
+            return;
+        }
+    }
+})();
+</script>
+</body>
+</html>

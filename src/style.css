@@ -158,6 +158,44 @@ main {
     p {
         margin: 0.5em 0;
     }
+    form {
+        max-width: 480px;
+        p {
+            margin: 0.5em 0;
+        }
+        label {
+            display: block;
+            font-size: 15px;
+            span {
+                display: block;
+                margin-bottom: 4px;
+            }
+        }
+        input[type="text"], select, textarea {
+            width: 100%;
+            box-sizing: border-box;
+            font: inherit;
+            padding: 6px 8px;
+            border: 1px solid #999;
+            border-radius: 6px;
+            background: #fff;
+        }
+        textarea {
+            resize: vertical;
+        }
+        button {
+            font: inherit;
+            font-size: 15px;
+            padding: 6px 16px;
+            border: 1px solid #999;
+            border-radius: 6px;
+            background: #ddd;
+            cursor: pointer;
+            &:hover {
+                background: #ccc;
+            }
+        }
+    }
 }
 
 footer {
