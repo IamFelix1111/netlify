@@ -643,12 +643,19 @@ if (typeof document !== 'undefined') {
         // controlled, and claim() can land after the user's first click);
         // otherwise falls back to a blob download.
         let swReady = null;
+        let lastBlobUrl = null;
         const ensureSW = () => {
             if (!swReady) {
                 swReady = (async () => {
                     if (!('serviceWorker' in navigator)) return null;
                     try {
-                        const reg = await navigator.serviceWorker.register('sw.js');
+                        // Register relative to the PAGE, not <base>: hosts
+                        // like Netlify 301 the navigation to a canonical
+                        // (lowercase) URL, and a scope built from
+                        // <base href="/Secrets/"> then no longer contains
+                        // the page, so the worker could never control it.
+                        const reg = await navigator.serviceWorker.register(
+                            new URL('sw.js', location.href).pathname);
                         if (!navigator.serviceWorker.controller) {
                             await new Promise((res, rej) => {
                                 const t = setTimeout(() => rej(new Error('timeout')), 10000);
@@ -658,7 +665,7 @@ if (typeof document !== 'undefined') {
                         }
                         // Probe: only a controlled page's fetch reaches the
                         // worker, so the custom header proves interception.
-                        const ping = await fetch(new URL('__dl/ping', document.baseURI).pathname,
+                        const ping = await fetch(new URL('__dl/ping', location.href).pathname,
                             { cache: 'no-store' });
                         if (!ping.ok || ping.headers.get('X-Secrets-DL') !== '1') return null;
                         return true;
@@ -708,7 +715,7 @@ if (typeof document !== 'undefined') {
                                 dlSink = window.SecretsVault.makeDownloadSink(fname, meta.totalSize);
                                 const id = [...crypto.getRandomValues(new Uint8Array(8))]
                                     .map(b => b.toString(16).padStart(2, '0')).join('');
-                                const url = new URL('__dl/' + id, document.baseURI).pathname;
+                                const url = new URL('__dl/' + id, location.href).pathname;
                                 // Hand over the stream and WAIT for the worker's
                                 // ack before clicking: the download request can
                                 // otherwise overtake the 'offer' message across
@@ -736,12 +743,23 @@ if (typeof document !== 'undefined') {
                 hideBar();
                 if (r.blob) {  // blob fallback: hand it to the download manager
                     say('downloading', true);
+                    // A big blob keeps streaming to disk long after click();
+                    // revoking the object URL after a few seconds kills that
+                    // copy with "Failed - No file". Keep it until the next
+                    // download starts (and at most 10 minutes).
+                    if (lastBlobUrl) URL.revokeObjectURL(lastBlobUrl);
                     const url = URL.createObjectURL(r.blob);
+                    lastBlobUrl = url;
                     const a = document.createElement('a');
                     a.href = url;
                     a.download = r.name || 'decoded.bin';
                     a.click();
-                    setTimeout(() => URL.revokeObjectURL(url), 10000);
+                    setTimeout(() => {
+                        if (lastBlobUrl === url) {
+                            URL.revokeObjectURL(url);
+                            lastBlobUrl = null;
+                        }
+                    }, 10 * 60 * 1000);
                 }
                 say('done', true);
             } catch (err) {
