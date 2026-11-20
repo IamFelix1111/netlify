@@ -119,3 +119,18 @@ class LangSelect extends HTMLElement {
 customElements.define('lang-select', LangSelect);
 
 window.addEventListener('DOMContentLoaded', () => document.body.classList.add('with-script'));
+
+// Hand the issue form (hosted on the Netlify site) the current page URL so
+// its back button can return visitors to the page they came from — on the
+// site (GitHub Pages or Netlify) they were actually browsing.
+window.addEventListener('DOMContentLoaded', () => {
+    document.querySelectorAll('a[href*="/new-issue"]').forEach(a => {
+        try {
+            const url = new URL(a.href);
+            url.searchParams.set('back', location.href);
+            a.href = url.href;
+        } catch (err) {
+            console.error(err);
+        }
+    });
+});

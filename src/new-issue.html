@@ -53,14 +53,37 @@
 </footer>
 <script>
 (function () {
-    var project = new URLSearchParams(location.search).get('project');
-    if (!project) return;
-    var select = document.getElementById('issue-project');
-    for (var i = 0; i < select.options.length; i++) {
-        if (select.options[i].value === project) {
-            select.value = project;
-            return;
+    var params = new URLSearchParams(location.search);
+
+    var project = params.get('project');
+    if (project) {
+        var select = document.getElementById('issue-project');
+        for (var i = 0; i < select.options.length; i++) {
+            if (select.options[i].value === project) select.value = project;
         }
+    }
+
+    // Only same-site paths or our own domains, to avoid redirect links to
+    // arbitrary origins crafted through the query string.
+    function safeBack(value) {
+        if (!value) return null;
+        if (value === '/' || /^\/[^/]/.test(value)) return value;
+        try {
+            var url = new URL(value);
+            if (url.protocol === 'https:' &&
+                (url.hostname === 'iamfelix1111.github.io' || url.hostname === 'iamfelix.netlify.app'))
+                return url.href;
+        } catch (err) {
+            console.error(err);
+        }
+        return null;
+    }
+
+    var back = safeBack(params.get('back'));
+    if (back) {
+        var link = document.querySelector('header .back');
+        link.href = back;
+        link.dataset.i18n = 'back-return';
     }
 })();
 </script>

@@ -34,6 +34,19 @@ window.I18N = {
         'zh-cn': `&leftarrow; 主页`,
         'zh-tw': '&leftarrow; 首頁'
     },
+    'back-return': {
+        'de': `&leftarrow; Zurück`,
+        'en': `&leftarrow; Back`,
+        'es': `&leftarrow; Volver`,
+        'fr': `&leftarrow; Retour`,
+        'it': `&leftarrow; Indietro`,
+        'ja': `&leftarrow; 戻る`,
+        'ko': `&leftarrow; 뒤로`,
+        'pt': `&leftarrow; Voltar`,
+        'ru': `&leftarrow; Назад`,
+        'zh-cn': `&leftarrow; 返回`,
+        'zh-tw': '&leftarrow; 返回'
+    },
     'links': {
         'de': `Links`,
         'en': `Links`,
