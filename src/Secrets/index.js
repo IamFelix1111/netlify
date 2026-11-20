@@ -709,9 +709,21 @@ if (typeof document !== 'undefined') {
                                 const id = [...crypto.getRandomValues(new Uint8Array(8))]
                                     .map(b => b.toString(16).padStart(2, '0')).join('');
                                 const url = new URL('__dl/' + id, document.baseURI).pathname;
-                                navigator.serviceWorker.controller.postMessage(
-                                    { type: 'offer', url, stream: dlSink.stream, filename: fname, length: meta.totalSize },
-                                    [dlSink.stream]);
+                                // Hand over the stream and WAIT for the worker's
+                                // ack before clicking: the download request can
+                                // otherwise overtake the 'offer' message across
+                                // processes, and the worker 410s it ("Failed -
+                                // No file" in the browser's download manager).
+                                await new Promise((resolve, reject) => {
+                                    const ch = new MessageChannel();
+                                    const timer = setTimeout(
+                                        () => reject(new Error('sw ack timeout')), 5000);
+                                    ch.port1.onmessage = () => { clearTimeout(timer); resolve(); };
+                                    navigator.serviceWorker.controller.postMessage(
+                                        { type: 'offer', url, stream: dlSink.stream,
+                                          filename: fname, length: meta.totalSize },
+                                        [dlSink.stream, ch.port2]);
+                                });
                                 const a = document.createElement('a');  // normal download
                                 a.href = url;
                                 a.download = fname;
