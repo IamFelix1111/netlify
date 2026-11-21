@@ -699,6 +699,29 @@ if (typeof document !== 'undefined') {
             });
             try {
                 say('fetching');
+                // Chromium 157+ sends <a download> clicks straight to the
+                // network, bypassing service workers entirely (verified on
+                // Edge 157: the __dl URL reached the origin as a 404 while
+                // the worker still held the stream). A real file handle is
+                // better anyway — bytes stream to disk with native cancel —
+                // but the picker must open inside the click's activation
+                // window, before any slow awaits.
+                let fsHandle = null, fsSink = null;
+                if (window.showSaveFilePicker) {
+                    try {
+                        fsHandle = await window.showSaveFilePicker({
+                            suggestedName: 'secrets-download.bin',
+                        });
+                    } catch (err) {
+                        if (err && err.name === 'AbortError') throw new Error('Download cancelled');
+                        fsHandle = null;  // no user activation: use older paths
+                    }
+                }
+                if (fsHandle) {
+                    try { fsSink = window.SecretsVault.fileSink(await fsHandle.createWritable()); }
+                    catch (e) { fsSink = null; }
+                }
+                let realName = null;
                 const sw = await ensureSW();
                 let dlSink = null;
                 const r = await window.SecretsVault.downloadDecrypted(base, key, {
@@ -710,6 +733,8 @@ if (typeof document !== 'undefined') {
                     },
                     onMeta: async meta => {
                         const fname = meta.name || 'decoded.bin';
+                        realName = fname;
+                        if (fsSink) return;  // already streaming to the handle
                         if (sw && meta.totalSize >= 0) {
                             try {
                                 dlSink = window.SecretsVault.makeDownloadSink(fname, meta.totalSize);
@@ -731,17 +756,26 @@ if (typeof document !== 'undefined') {
                                           filename: fname, length: meta.totalSize },
                                         [dlSink.stream, ch.port2]);
                                 });
-                                const a = document.createElement('a');  // normal download
-                                a.href = url;
-                                a.download = fname;
-                                a.click();
+                                // An iframe NAVIGATION is service-worker
+                                // intercepted even where anchor-download
+                                // clicks are not; the attachment response
+                                // is then handed to the download manager.
+                                const f = document.createElement('iframe');
+                                f.hidden = true;
+                                f.src = url;
+                                document.body.appendChild(f);
+                                setTimeout(() => f.remove(), 5 * 60 * 1000);
                             } catch (err) { dlSink = null; }  // fall back to blob
                         }
                     },
-                    createSink: async () => dlSink || window.SecretsVault.blobSink(),
+                    createSink: async () => fsSink || dlSink || window.SecretsVault.blobSink(),
                 });
                 hideBar();
-                if (r.blob) {  // blob fallback: hand it to the download manager
+                if (fsSink) {
+                    // Best-effort rename now that the writable is closed.
+                    try { if (realName && fsHandle.move) await fsHandle.move(realName); }
+                    catch (e) { /* keep the placeholder name */ }
+                } else if (r.blob) {  // blob fallback: hand it to the download manager
                     say('downloading', true);
                     // A big blob keeps streaming to disk long after click();
                     // revoking the object URL after a few seconds kills that
