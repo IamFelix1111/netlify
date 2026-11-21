@@ -448,10 +448,20 @@ window.SecretsVault = (() => {
                 reader.cancel().catch(() => {});  // drop the connection on early exit
             }
         }
+        // Static hosts (notably GitHub Pages) occasionally answer a cold
+        // chunk request with a transient 5xx; a couple of quick retries
+        // keeps long playlists from failing mid-download.
+        async function fetchChunk(url) {
+            for (let attempt = 0; ; attempt++) {
+                const resp = await fetch(url);
+                if (resp.ok) return resp;
+                if (resp.status < 500 || attempt >= 2) throw new Error(`HTTP ${resp.status}`);
+                await new Promise(r => setTimeout(r, 400 * (attempt + 1)));
+            }
+        }
         async function* cipher() {
             for (let k = 0; ; k++) {
-                const resp = await fetch(`${base}${k.toString(16).padStart(4, '0')}.enc`);
-                if (!resp.ok) throw new Error(`HTTP ${resp.status}`);
+                const resp = await fetchChunk(`${base}${k.toString(16).padStart(4, '0')}.enc`);
                 yield* oneSegment(resp, k, k === 0);
                 if (k + 1 >= meta.segCount) break;
             }
